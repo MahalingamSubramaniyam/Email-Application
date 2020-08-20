@@ -1,0 +1,59 @@
+﻿@model MailApplication.Models.EmailModel
+
+@{
+    ViewBag.Title = "Email";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Custom Email Client</h2>
+
+<script>
+    if ('@ViewBag.Message' != "" && '@ViewBag.Message' != null) {
+        alert('@ViewBag.Message')
+    }
+</script>
+
+
+@using (Html.BeginForm("SendEmail", "Email", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2">To</label><span style="color:red"> *</span>
+            <div class="col-md-10">
+                <input type="text" id="To" name="To" class="form-control" required placeholder="To email address" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Subject</label><span style="color:red"> *</span>
+            <div class="col-md-10">
+                <input type="text" id="Subject" name="Subject" class="form-control" required placeholder="mail subject" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Body</label><span style="color:red"> *</span>
+            <div class="col-md-10">
+                <textarea id="BodyText" name="BodyText" class="form-control" style="width:40%;height:100px" required placeholder="mail body"> </textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Send" onclick="SendMail();" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/Email.js"></script>
+
+}
